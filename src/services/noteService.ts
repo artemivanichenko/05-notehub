@@ -1,6 +1,3 @@
-// GET https://notehub-public.goit.study/api/notes?page=1&perPage=12
-// GET https://notehub-public.goit.study/api/notes?search=mysearchtext
-
 import axios from "axios";
 import { type Note, type NoteTag } from "../types/note";
 
@@ -12,6 +9,12 @@ const axiosInst = axios.create({
 interface fetchNotesProps {
 	notes: Note[];
 	totalPages: number;
+}
+
+interface newTaskProp {
+	title: string; // description
+	content: string; // description
+	tag: NoteTag;
 }
 
 export const fetchNotes = async (
@@ -33,18 +36,12 @@ export const fetchNotes = async (
 	return fetchNotesResponse.data;
 };
 
-interface newTaskProp {
-	title: string; // description
-	content: string; // description
-	tag: NoteTag;
-}
-
-export const createNote = async (newTask: newTaskProp): Promise<Note> => {
+export const createNote = async (newTask: newTaskProp) => {
 	const createNoteResponse = await axiosInst.post("/notes", newTask);
 	return createNoteResponse.data;
 };
 
-export const deleteNote = async (taskID: string): Promise<Note> => {
+export const deleteNote = async (taskID: string) => {
 	const deleteNoteResponse = await axiosInst.delete(`/notes/${taskID}`);
 	return deleteNoteResponse.data;
 };
